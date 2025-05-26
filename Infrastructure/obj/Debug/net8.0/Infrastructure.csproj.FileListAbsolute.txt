@@ -1,0 +1,15 @@
+C:\Users\User\UniVerse\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
+C:\Users\User\UniVerse\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
+C:\Users\User\UniVerse\Infrastructure\bin\Debug\net8.0\Infrastructure.pdb
+C:\Users\User\UniVerse\Infrastructure\bin\Debug\net8.0\Core.dll
+C:\Users\User\UniVerse\Infrastructure\bin\Debug\net8.0\Core.pdb
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
+C:\Users\User\UniVerse\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
