@@ -1,0 +1,17 @@
+.login-page {
+    background-color: #fff;
+  }
+  
+  .login-form-box {
+    max-width: 400px;
+  }
+  
+  .login-form-box a {
+    color: #5624d0;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .login-form-box a:hover {
+    text-decoration: underline;
+  }
