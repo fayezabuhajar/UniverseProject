@@ -26,16 +26,18 @@ const getInstructorIdFromToken = () => {
 };
 
   useEffect(() => {
-    const instructorId = getInstructorIdFromToken();
-    if (instructorId) {
-      setFormData(prev => ({
-        ...prev,
-        instructorId
-      }));
-    }
-  }, []);
-  
-   
+  const instructorId = getInstructorIdFromToken();
+  if (instructorId) {
+    setFormData(prev => ({
+      ...prev,
+      instructorId
+    }));
+    fetchCourses(instructorId); // Fetch courses for the instructor
+  }
+}, []);
+
+const [editingCourseId, setEditingCourseId] = useState(null);
+    const [courses, setCourses] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
       title: '',
@@ -52,6 +54,17 @@ const getInstructorIdFromToken = () => {
     const handleChange = (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const fetchCourses = async (instructorId) => {
+  try {
+    const response = await fetch(`https://localhost:5001/api/course/instructor/${instructorId}`);
+    const data = await response.json();
+    setCourses(data);
+  } catch (error) {
+    console.error('Failed to fetch courses:', error);
+  }
+};
+
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -89,6 +102,23 @@ const getInstructorIdFromToken = () => {
         alert(`Failed to create course: ${error.message}`);
       }
     };
+
+     const handleEdit = (course) => {
+    setEditingCourseId(course.id);
+    setFormData(course);
+    setShowModal(true);
+  };
+
+  const handleDelete = async (courseId) => {
+    if (!window.confirm('Are you sure you want to delete this course?')) return;
+
+    try {
+      await fetch(`https://localhost:5001/api/course/delete/${courseId}`, { method: 'DELETE' });
+      setCourses(courses.filter(c => c.id !== courseId));
+    } catch (error) {
+      console.error('Failed to delete course:', error);
+    }
+  };
 
     
   return (
@@ -168,6 +198,26 @@ const getInstructorIdFromToken = () => {
           <button className="btn btn-primary" onClick={handleShowModal}>Create Your Course</button>
         </div>
 
+         <div className="list-group mb-4">
+          {courses.length === 0 && <p>No courses found.</p>}
+          {courses.map(course => (
+            <div key={course.id} className="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h6>{course.title}</h6>
+                <p>{course.description}</p>
+                <small>Price: ${course.price} | Duration: {course.duration} hours</small>
+              </div>
+              <div>
+                <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(course)}>Edit</button>
+                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(course.id)}>Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+
+        
+
          {/* Modal */}
          <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
@@ -207,6 +257,8 @@ const getInstructorIdFromToken = () => {
         <p className="text-muted">Based on your experience, we think these resources will be helpful.</p>
 
         <div className="row">
+
+            
           
 
           <div className="col-md-12 mb-4">

@@ -1,0 +1,19 @@
+.reels-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.reel-video {
+  width: 100%;
+  height: 90vh; /* ارتفاع مناسب للشاشة */
+  object-fit: cover; /* لضمان تغطية الفيديو دون تشويه */
+  border-radius: 10px; /* إضافة حواف ناعمة للفيديو */
+}
+
+.reels-grid {
+  display: flex;
+  flex-direction: column; /* ترتيب الفيديوهات عمودياً */
+  align-items: center; /* توسيط المحتوى */
+  gap: 20px; /* ترك مسافة بين الفيديوهات */
+}

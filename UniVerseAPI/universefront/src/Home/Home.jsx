@@ -9,7 +9,7 @@ function Home() {
       <Navbar expand="lg" bg="light" className="shadow-sm px-4 py-3 sticky-top">
         <Container>
           {/* استخدم as={Link} مع to */}
-          <Navbar.Brand as={Link} to="/" className="fw-bold text-dark">
+          <Navbar.Brand as={Link} to="/Home" className="fw-bold text-dark">
             UniVerse
           </Navbar.Brand>
 
@@ -22,14 +22,14 @@ function Home() {
           </Form>
 
           <Nav>
-            <Nav.Link as={Link} to="/explore" className="text-dark">
+            <Nav.Link as={Link} to="/Reels" className="text-dark">
               Explore
             </Nav.Link>
-            <Nav.Link as={Link} to="/business" className="text-dark">
+            <Nav.Link as={Link} to="/UniverseBusiness" className="text-dark">
               UniVerse Business
             </Nav.Link>
             
-            <Nav.Link as={Link} to="/StudentRegister" variant="primary"  style={{
+            <Nav.Link as={Link} to="/login" variant="primary"  style={{
     backgroundColor: '#007bff', // الأزرق الأساسي
     color: 'white',
     border: 'none',
@@ -113,7 +113,7 @@ function Home() {
               }}
               className="px-3 py-1 rounded"
             >
-              Study now for free
+              Comig soon
             </Button>
           </Col>
         </Row>
@@ -135,8 +135,8 @@ function Home() {
         <Row className="p-3">
           <Col xs={12}>
             <img
-              src="https://www.thenation.com/wp-content/uploads/2024/07/GettyImages-1993689821-810x510.jpg"
-              alt="Gaza Program"
+              src="/Images/kdgoego.jpg"
+              alt="KDGO Program"
               style={{
                 width: '100%',
                 height: '150px',
@@ -147,9 +147,9 @@ function Home() {
           </Col>
 
           <Col xs={12} className="mt-2">
-            <h5 className="fw-bold mb-1">Gaza Program</h5>
+            <h5 className="fw-bold mb-1">Kdgo Program</h5>
             <p className="mb-2" style={{ fontSize: '0.9rem' }}>
-              Now from UniVerse, free courses for our people in Gaza.
+              Learn to code the fun way with KDGO – your child's first step into the world of creativity and technology!
             </p>
             <Button
               style={{
@@ -160,7 +160,7 @@ function Home() {
               }}
               className="px-3 py-1 rounded"
             >
-              Study now for free
+              Comig soon
             </Button>
           </Col>
         </Row>

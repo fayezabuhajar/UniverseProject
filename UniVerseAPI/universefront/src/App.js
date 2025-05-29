@@ -12,6 +12,8 @@ import Comments from './Communication/Comments';
 import Messages from './Communication/Messages';
 import Assignments from './Communication/Assignments';
 import Quizzes from './Communication/Quizzes';
+import Reels from './Reels/Reels';
+import UniverseBusiness from './UniverseBusiness/UniverseBusiness';
 
 import './App.css';  // تأكد من أن استيراد ملف الـ CSS في الأعلى
 
@@ -32,6 +34,8 @@ const App = () => {
         <Route path="/Messages" element={<Messages />} />
         <Route path="/Assignments" element={<Assignments />} />
         <Route path="/Quizzes" element={<Quizzes />} />
+        <Route path="/Reels" element={<Reels />} />
+        <Route path="/UniverseBusiness" element={<UniverseBusiness />} />
 
         
         
