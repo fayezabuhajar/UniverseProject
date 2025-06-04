@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using API.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Core.Entities;
+
 
 public class InstructorAccountController(UniverseContext context, ITokenService tokenService) : BaseApiController
 {

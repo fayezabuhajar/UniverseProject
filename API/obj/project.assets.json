@@ -4869,6 +4869,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Core >= 1.0.0",
       "Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.5",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.2",
@@ -4903,6 +4904,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "C:\\Users\\User\\UniVerse\\Core\\Core.csproj": {
+              "projectPath": "C:\\Users\\User\\UniVerse\\Core\\Core.csproj"
+            },
             "C:\\Users\\User\\UniVerse\\Infrastructure\\Infrastructure.csproj": {
               "projectPath": "C:\\Users\\User\\UniVerse\\Infrastructure\\Infrastructure.csproj"
             }

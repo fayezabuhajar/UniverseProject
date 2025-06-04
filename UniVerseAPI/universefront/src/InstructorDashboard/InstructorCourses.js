@@ -8,6 +8,15 @@ import { jwtDecode } from 'jwt-decode';
 const InstructorCourses = () => {
    const [showSubMenu, setShowSubMenu] = useState(false);
 
+   const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
+  
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+   
+
 const getInstructorIdFromToken = () => {
   const token = localStorage.getItem('token');
   if (!token) return null;
@@ -24,6 +33,25 @@ const getInstructorIdFromToken = () => {
     return null;
   }
 };
+
+const fetchCourses = async (instructorId) => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`/api/course/instructor/${instructorId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!response.ok) throw new Error('Failed to fetch courses');
+    const data = await response.json();
+    setCourses(data);
+  } catch (error) {
+    console.error("Error fetching instructor courses:", error);
+  }
+};
+
+
+
 
   useEffect(() => {
   const instructorId = getInstructorIdFromToken();
@@ -48,66 +76,54 @@ const [editingCourseId, setEditingCourseId] = useState(null);
       videoPreviewUrl: ''
     });
   
-    const handleShowModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false);
-  
-    const handleChange = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const fetchCourses = async (instructorId) => {
-  try {
-    const response = await fetch(`https://localhost:5001/api/course/instructor/${instructorId}`);
-    const data = await response.json();
-    setCourses(data);
-  } catch (error) {
-    console.error('Failed to fetch courses:', error);
-  }
-};
+    
 
   
     const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        const response = await fetch('https://localhost:5001/api/course/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
+  e.preventDefault();
+  if (!formData.title || !formData.description || !formData.price) {
+    alert("Please fill in all required fields.");
+    return;
+  }
+
+  try {
+    const response = await fetch('https://localhost:5001/api/course/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || 'Something went wrong');
+    }
+
+    const result = await response.json();
+    console.log('Course created:', result);
+
+    setFormData({ title: '', description: '', price: '', duration: '', pictureUrl: '', videoPreviewUrl: '', instructorId: formData.instructorId });
+    handleCloseModal();
+    alert('Course created successfully!');
+
+    // ✅ اجلب الكورسات مرة أخرى بعد إنشاء الكورس
+    fetchCourses(formData.instructorId);
+  } catch (error) {
+    console.error('Error creating course:', error.message);
+    alert(`Failed to create course: ${error.message}`);
+  }
+};
     
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(errorText || 'Something went wrong');
-        }
-    
-        const result = await response.json();
-        console.log('Course created:', result);
-    
-        // Reset form + close modal
-        setFormData({
-          title: '',
-          description: '',
-          price: '',
-          duration: '',
-          pictureUrl: '',
-          videoPreviewUrl: '',
-          instructorId: '' // أضف هذا الحقل إذا لم يكن موجودًا
-        });
-        handleCloseModal();
-        alert('Course created successfully!');
-      } catch (error) {
-        console.error('Error creating course:', error.message);
-        alert(`Failed to create course: ${error.message}`);
-      }
-    };
+
+  
+
 
      const handleEdit = (course) => {
     setEditingCourseId(course.id);
     setFormData(course);
     setShowModal(true);
   };
+
+
 
   const handleDelete = async (courseId) => {
     if (!window.confirm('Are you sure you want to delete this course?')) return;

@@ -4,6 +4,7 @@ using System.Text;
 using API.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using Core.Entities;
 
 
 namespace API.Services

@@ -55,6 +55,18 @@ public async Task<ActionResult<CourseDto>> CreateCourse(CourseDto dto)
     return Ok(dto);
 }
 
+  // Get courses by instructor id
+[HttpGet("instructor/{instructorId}")]
+public async Task<ActionResult<IEnumerable<Course>>> GetCoursesByInstructor(int instructorId)
+{
+    var courses = await _context.Courses
+        .Where(c => c.InstructorId == instructorId)
+        .ToListAsync();
+
+    return Ok(courses);
+}
+
+
 
 
         // Read

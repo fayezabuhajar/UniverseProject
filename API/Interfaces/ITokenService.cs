@@ -1,4 +1,6 @@
 using System;
+using Core.Entities;
+
 
 namespace API.Interfaces;
 
