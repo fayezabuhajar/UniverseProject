@@ -482,3 +482,11 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Ignore build output directories and binaries
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
