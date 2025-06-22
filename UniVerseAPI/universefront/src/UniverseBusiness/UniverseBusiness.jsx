@@ -61,7 +61,7 @@ const videoRefs = useRef([]);
             <Nav.Link as={Link} to="/Reels" className="text-dark">
               Explore
             </Nav.Link>
-            <Nav.Link as={Link} to="/" className="text-dark">
+            <Nav.Link as={Link} to="/UniVerseBusiness" className="text-dark">
               UniVerse Business
             </Nav.Link>
             

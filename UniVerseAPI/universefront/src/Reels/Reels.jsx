@@ -65,11 +65,11 @@ const Reels = () => {
             <Nav.Link as={Link} to="/Reels" className="text-dark">
               Explore
             </Nav.Link>
-            <Nav.Link as={Link} to="/" className="text-dark">
+            <Nav.Link as={Link} to="/UniVerseBusiness" className="text-dark">
               UniVerse Business
             </Nav.Link>
             
-            <Nav.Link as={Link} to="/StudentRegister" variant="primary"  style={{
+            <Nav.Link as={Link} to="/login" variant="primary"  style={{
     backgroundColor: '#007bff', // الأزرق الأساسي
     color: 'white',
     border: 'none',

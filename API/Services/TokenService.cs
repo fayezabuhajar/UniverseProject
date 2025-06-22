@@ -18,6 +18,36 @@ namespace API.Services
             this.config = config;
         }
 
+
+        public string CreateAdminToken(Admin admin)
+        {
+            var tokenKey = config["TokenKey"] ?? throw new Exception("Cannot access tokenKey from appsettings");
+            if (tokenKey.Length < 64) throw new Exception("Your Token needs to be longer");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
+
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Email, admin.Email),
+                new Claim(ClaimTypes.NameIdentifier, admin.Id.ToString()),
+                new Claim(ClaimTypes.Role, "Admin"),  // مهم عشان تفرق بين الأدوار
+            };
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = creds,
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
+
         public string CreateStudentToken(Student student)
         {
             var tokenKey = config["TokenKey"] ?? throw new Exception("Cannot access tokenKey from appsettings");
@@ -27,7 +57,12 @@ namespace API.Services
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Email, student.Email),
-                
+                new Claim(ClaimTypes.Role, "Student"),
+                new Claim(ClaimTypes.NameIdentifier, student.Id.ToString()), // أو Claim("Id", ...)
+                new Claim(ClaimTypes.Role, "Student"),
+                new Claim("Id", student.Id.ToString()) // 👈 مهم جداً // هنا تضيف الدور مباشرة
+
+
                 // يمكنك إضافة claims أخرى حسب الحاجة
             };
 
@@ -57,6 +92,8 @@ namespace API.Services
                 new Claim(JwtRegisteredClaimNames.Email, instructor.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Id", instructor.Id.ToString()),// ← هنا
+                new Claim(ClaimTypes.Role, "Instructor")
+
 
             };
 

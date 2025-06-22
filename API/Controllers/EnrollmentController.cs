@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+  
     public class EnrollmentController : BaseApiController
     {
         private readonly UniverseContext _context;

@@ -1,5 +1,7 @@
 import  { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Navbar, FormControl, Nav} from 'react-bootstrap';
 import axios from 'axios'; // تأكد من استيراد axios
 import './StudentRegister.css';
 
@@ -51,7 +53,7 @@ const StudentRegister = () => {
       const response = await axios.post('http://localhost:5000/api/studentaccount/register', registerData);
       console.log('User Registered:', response.data);
       alert(`Registered successfully! Welcome ${response.data.firstName}`);
-      window.location.href = '/LoginPage';
+      window.location.href = '/login';
     } catch (error) {
       console.error('Registration Error:', error);
       setErrorMessage('There was an error with registration. Please try again.');
@@ -59,7 +61,42 @@ const StudentRegister = () => {
   };
 
   return (
+    
     <Container fluid className="register-page">
+      <Navbar expand="lg" bg="light" className="shadow-sm px-4 py-3 sticky-top">
+        
+          {/* استخدم as={Link} مع to */}
+          <Navbar.Brand as={Link} to="/Home" className="fw-bold text-dark">
+            UniVerse
+          </Navbar.Brand>
+
+          <Form className="d-flex mx-4 flex-grow-1">
+            <FormControl
+              type="search"
+              placeholder="Search for anything"
+              className="me-2 rounded-pill"
+            />
+          </Form>
+
+          <Nav>
+            <Nav.Link as={Link} to="/Reels" className="text-dark">
+              Explore
+            </Nav.Link>
+            <Nav.Link as={Link} to="/UniverseBusiness" className="text-dark">
+              UniVerse Business
+            </Nav.Link>
+            
+            <Nav.Link as={Link} to="/login" variant="primary"  style={{
+    backgroundColor: '#007bff', // الأزرق الأساسي
+    color: 'white',
+    border: 'none',
+    textAlign: 'center',
+  }} className="btn btn-primary">
+              Login
+            </Nav.Link>
+          </Nav>
+        
+      </Navbar>
       <Row className="min-vh-100 align-items-center">
         {/* صورة جانبية */}
         <Col md={6} className="d-none d-md-flex justify-content-center">
@@ -205,6 +242,7 @@ const StudentRegister = () => {
         </Col>
       </Row>
     </Container>
+    
   );
 };
 

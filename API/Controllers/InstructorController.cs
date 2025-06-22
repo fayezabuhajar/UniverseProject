@@ -12,8 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+  
     public class InstructorController : BaseApiController
     {
         private readonly UniverseContext _context;
@@ -26,18 +25,36 @@ namespace API.Controllers
 
        [Authorize]
         [HttpGet("get-instructor-id")]
-public ActionResult<int> GetInstructorIdFromToken()
-{
-    var instructorIdClaim = User.FindFirst("Id")?.Value;
+        public ActionResult<int> GetInstructorIdFromToken()
+        {
+            var instructorIdClaim = User.FindFirst("Id")?.Value;
 
-    if (string.IsNullOrEmpty(instructorIdClaim))
-        return Unauthorized("Instructor ID not found in token.");
+            if (string.IsNullOrEmpty(instructorIdClaim))
+                return Unauthorized("Instructor ID not found in token.");
 
-    if (!int.TryParse(instructorIdClaim, out int instructorId))
-        return BadRequest("Invalid Instructor ID in token.");
+            if (!int.TryParse(instructorIdClaim, out int instructorId))
+                return BadRequest("Invalid Instructor ID in token.");
 
-    return Ok(instructorId);
-}
+            return Ok(instructorId);
+        }
+
+        [Authorize(Roles = "Instructor")]
+        [HttpGet("notifications")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetInstructorNotifications()
+        {
+            var instructorIdClaim = User.FindFirst("Id")?.Value;
+            if (instructorIdClaim == null)
+                return Unauthorized("Instructor ID not found in token");
+
+            int instructorId = int.Parse(instructorIdClaim);
+
+            var notifications = await _context.Notifications
+                .Where(n => n.InstructorId == instructorId)
+                .OrderByDescending(n => n.CreatedAt)
+                .ToListAsync();
+
+            return Ok(notifications);
+        }
 
 
 
@@ -93,6 +110,36 @@ public ActionResult<int> GetInstructorIdFromToken()
 
             return Ok(instructor);
         }
+
+          [HttpPut("block/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> BlockInstructor(int id)
+    {
+        var instructor = await _context.Instructors.FindAsync(id);
+        if (instructor == null)
+            return NotFound("Instructor not found");
+
+        instructor.IsBlocked = true;
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Instructor blocked successfully" });
+    }
+
+    // Unblock Instructor (اختياري)
+    [HttpPut("unblock/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UnblockInstructor(int id)
+    {
+        var instructor = await _context.Instructors.FindAsync(id);
+        if (instructor == null)
+            return NotFound("Instructor not found");
+
+        instructor.IsBlocked = false;
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Instructor unblocked successfully" });
+    }
+
 
         // Update
         [HttpPut("{id}")]
